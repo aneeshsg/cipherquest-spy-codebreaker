@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode variables */
+    --background: 220 20% 97%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 160 100% 40%;
+    --primary-foreground: 355.7 100% 97.3%;
+
+    --secondary: 120 100% 70%;
+    --secondary-foreground: 355.7 100% 97.3%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142.1 76.2% 36.3%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark mode variables */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 160 100% 50%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 120 100% 70%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 160 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-cipher-dark text-cipher-light antialiased overflow-x-hidden;
+    font-family: 'Courier New', monospace;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-mono;
+  }
+
+  /* Light mode overrides */
+  :root:not(.dark) {
+    --cipher-dark: #f0f0f0;
+    --cipher-darker: #ffffff;
+    --cipher-light: #222222;
+    --cipher-primary: #00a080;
+  }
+
+  /* Dark mode keeps original colors */
+  .dark {
+    --cipher-dark: #121212;
+    --cipher-darker: #0a0a0a;
+    --cipher-light: #e0e0e0;
+    --cipher-primary: #00ffcc;
+  }
+}
+
+@layer utilities {
+  .terminal-text {
+    @apply font-mono;
+  }
+
+  .scanner {
+    @apply relative overflow-hidden;
+  }
+
+  .scanner::after {
+    content: "";
+    @apply absolute top-0 left-0 right-0 bottom-0;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 204, 0.1), transparent);
+    animation: scan 2s linear infinite;
+  }
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .crt-effect {
+    @apply relative overflow-hidden;
+  }
+
+  .crt-effect::before {
+    content: " ";
+    @apply block absolute top-0 left-0 bottom-0 right-0 pointer-events-none;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 204, 0.05), transparent);
+    background-size: 100% 3px;
+    animation: crt-scan 6s linear infinite;
+  }
+
+  @keyframes crt-scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: 0.15em;
+    animation: typing 3.5s steps(40, end);
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .spy-shadow {
+    text-shadow: 0 0 5px theme('colors.cipher.primary');
+  }
+  
+  .pulse-text {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Easter Egg Animations */
+  .matrix-mode {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matrix-mode::before {
+    content: "0 1 0 1";
+    font-family: monospace;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 255, 70, 0.1), rgba(0, 255, 70, 0.2));
+    font-size: 1.2em;
+    letter-spacing: 0.2em;
+    color: #00ff44;
+    text-shadow: 0 0 5px #00ff44;
+    pointer-events: none;
+    animation: matrix-rain 1s linear infinite;
+    z-index: 9999;
+  }
+
+  @keyframes matrix-rain {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  .agent-mode * {
+    transition: all 0.5s ease;
+    animation: spy-effect 5s ease;
+  }
+
+  @keyframes spy-effect {
+    0% { filter: grayscale(0); }
+    30% { filter: grayscale(1) contrast(150%); }
+    70% { filter: grayscale(1) contrast(150%); }
+    100% { filter: grayscale(0); }
+  }
+}
